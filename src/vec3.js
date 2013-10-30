@@ -236,6 +236,15 @@
     };
 
     /**
+     * Calc length no sqrt.
+     * @param {Float32Array} v
+     */
+    vec3.lengthSqr = function (v) {
+        var x = v[0], y = v[1], z = v[2];
+        return x * x + y * y + z * z;
+    };
+
+    /**
      * Normalized vector
      * @param {Float32Array} v
      */

@@ -244,9 +244,22 @@
         return this;
     };
 
+    /**
+     * Calc length.
+     * @param {Float32Array} v
+     */
     vec4.norm = function(v) {
         var x = v[0], y = v[1], z = v[2], w = v[3];
         return sqrt(x * x + y * y + z * z + w * w);
+    };
+
+    /**
+     * Calc length without sqrt function.
+     * @param {Float32Array} v
+     */
+    vec4.lengthSqr = function (v) {
+        var x = v[0], y = v[1], z = v[2], w = v[3];
+        return x * x + y * y + z * z + w * w;
     };
 
     vec4.normalize = function(v) {
