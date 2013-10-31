@@ -7,6 +7,35 @@
         acos = Math.acos,
         sqrt = Math.sqrt;
 
+    ///////////////////////////////////////////////////////
+
+    function getW() {
+        return this[0];
+    }
+    function setW(w) {
+        this[0] = w;
+    }
+    function getX() {
+        return this[1];
+    }
+    function setX(x) {
+        this[1] = x;
+    }
+    function getY() {
+        return this[2];
+    }
+    function setY(y) {
+        this[2] = y;
+    }
+    function getZ() {
+        return this[3];
+    }
+    function setZ(z) {
+        this[3] = z;
+    }
+
+    ///////////////////////////////////////////////////////
+
     /**
      * Make rotation quat
      * @param {number} w Component of w.
@@ -32,10 +61,11 @@
      */
     quat.create = function (w, x, y, z) {
 
-        var elements = [];
+        var elements = [],
+            ret;
 
-        if (Array.isArray(x)) {
-            elements = x;
+        if (Array.isArray(w)) {
+            elements = w;
         }
         else if (w === undefined) {
             elements = [1, 0, 0, 0];
@@ -53,7 +83,27 @@
             elements = [w, x, y, z];
         }
 
-        return new Float32Array(elements);
+        ret = new Float32Array(elements);
+        Object.defineProperties(ret, {
+            'w': {
+                get: getW,
+                set: setW
+            },
+            'x': {
+                get: getX,
+                set: setX
+            },
+            'y': {
+                get: getY,
+                set: setY
+            },
+            'z': {
+                get: getZ,
+                set: setZ
+            }
+        });
+
+        return ret;
     };
 
     /**
@@ -193,6 +243,24 @@
 
         return dest;
     };
+
+    quat.rotateQt = function (qt, vec, dest) {
+
+        dest || (dest = quat());
+
+        var tmpX, tmpY, tmpZ, tmpW;
+        tmpX = (((qt.w * vec.x) + (qt.y * vec.z)) - (qt.z * vec.y));
+        tmpY = (((qt.w * vec.y) + (qt.z * vec.x)) - (qt.x * vec.z));
+        tmpZ = (((qt.w * vec.z) + (qt.x * vec.y)) - (qt.y * vec.x));
+        tmpW = (((qt.x * vec.x) + (qt.y * vec.y)) + (qt.z * vec.z));
+
+        return vec3(
+            ((((tmpW * qt.x) + (tmpX * qt.w)) - (tmpY * qt.z)) + (tmpZ * qt.y)),
+            ((((tmpW * qt.y) + (tmpY * qt.w)) - (tmpZ * qt.x)) + (tmpX * qt.z)),
+            ((((tmpW * qt.z) + (tmpZ * qt.w)) - (tmpX * qt.y)) + (tmpY * qt.x))
+        );
+    };
+
 
     /**
      * Inverse quaternion.
