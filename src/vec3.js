@@ -90,7 +90,7 @@
             ret;
 
         if (Array.isArray(x)) {
-            elements = new Float32Array(x);
+            elements = x;
         }
         else if (x === undefined) {
             elements = [0, 0, 0];
