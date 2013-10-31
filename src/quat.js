@@ -244,7 +244,12 @@
         return dest;
     };
 
-    quat.rotateQt = function (qt, vec, dest) {
+    /**
+     * Rotate quaternion apply to a vector3.
+     * @param {Float32Array} qt
+     * @param {Float32Array} vec
+     */
+    quat.rotateQt = function (qt, vec) {
 
         dest || (dest = quat());
 
