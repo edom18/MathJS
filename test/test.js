@@ -42,6 +42,26 @@
             assert.equal(qt[2], 10);
             assert.equal(qt[3], 11);
         });
+
+        it('生成後のFloat32Arrayは、arr.wでひとつめの要素を返す', function () {
+            var q = quat([1, 2, 3, 4]);
+            assert.equal(1, q.w);
+        });
+
+        it('生成後のFloat32Arrayは、arr.xでふたつめの要素を返す', function () {
+            var q = quat([1, 2, 3, 4]);
+            assert.equal(2, q.x);
+        });
+
+        it('生成後のFloat32Arrayは、arr.yでみっつめの要素を返す', function () {
+            var q = quat([1, 2, 3, 4]);
+            assert.equal(3, q.y);
+        });
+
+        it('生成後のFloat32Arrayは、arr.zでよっつめの要素を返す', function () {
+            var q = quat([1, 2, 3, 4]);
+            assert.equal(4, q.z);
+        });
     });
 
     //mat3テスト
