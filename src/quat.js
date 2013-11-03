@@ -251,8 +251,6 @@
      */
     quat.rotateQt = function (qt, vec) {
 
-        dest || (dest = quat());
-
         var tmpX, tmpY, tmpZ, tmpW;
         tmpX = (((qt.w * vec.x) + (qt.y * vec.z)) - (qt.z * vec.y));
         tmpY = (((qt.w * vec.y) + (qt.z * vec.x)) - (qt.x * vec.z));
