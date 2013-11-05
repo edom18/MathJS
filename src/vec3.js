@@ -89,7 +89,7 @@
         var elements = [],
             ret;
 
-        if (Array.isArray(x)) {
+        if (Array.isArray(x) || Float32Array.prototype.isPrototypeOf(x)) {
             elements = x;
         }
         else if (x === undefined) {

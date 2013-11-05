@@ -64,7 +64,7 @@
         var elements = [],
             ret;
 
-        if (Array.isArray(w)) {
+        if (Array.isArray(w) || Float32Array.prototype.isPrototypeOf(w)) {
             elements = w;
         }
         else if (w === undefined) {
@@ -104,6 +104,26 @@
         });
 
         return ret;
+    };
+
+    /**
+     * Check to equal values.
+     * @param {quat} q1
+     * @param {quat} q2
+     */
+    quat.equal = function(q1, q2) {
+
+        var q1w = q1[0],
+            q1x = q1[1],
+            q1y = q1[2],
+            q1z = q1[3],
+
+            q2w = q2[0],
+            q2x = q2[1],
+            q2y = q2[2],
+            q2z = q2[3];
+
+        return (q1w === q2w) && (q1x === q2x) && (q1y === q2y) && (q1z === q2z);
     };
 
     /**

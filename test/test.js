@@ -62,6 +62,16 @@
             var q = quat([1, 2, 3, 4]);
             assert.equal(4, q.z);
         });
+
+        ///////////////////////////////////////////////////////////////////////////////
+
+        it('quat(qt)でクォータニオンのコピーが作れる', function () {
+            var q1 = quat([1, 2, 3, 4]);
+            var q2 = quat(q1);
+
+            assert.equal(true, q1 !== q2);
+            assert.equal(true, quat.equal(q1, q2));
+        });
     });
 
     //mat3テスト
@@ -396,6 +406,16 @@
             var v = vec2(2, 3);
             assert.equal('2,3', vec2.toString(v));
         });
+
+        ///////////////////////////////////////////////////////////////////////////////////
+
+        it('vec2(vec)でベクトルのコピーができる', function () {
+            var v1 = vec2(0.0, 1.0);
+            var v2 = vec2(v1);
+
+            assert.equal(true, v1 !== v2);
+            assert.equal(true, vec2.equal(v1, v2));
+        });
     });
 
 
@@ -606,6 +626,16 @@
             var v = vec3(2, 3, 4);
             assert.equal('2,3,4', vec3.toString(v));
         });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        it('vec3(vec)でベクトルのコピーができる', function () {
+            var v1 = vec3(0.0, 1.0, 0.3);
+            var v2 = vec3(v1);
+
+            assert.equal(true, v1 !== v2);
+            assert.equal(true, vec3.equal(v1, v2));
+        });
     });
 
     describe('vec4テスト', function () {
@@ -786,6 +816,16 @@
             assert.equal(1, v[0]);
             assert.equal(2, v[1]);
             assert.equal(3, v[2]);
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        it('vec4(vec)でベクトルのコピーができる', function () {
+            var v1 = vec4(0.0, 1.0, 0.3, 0.8);
+            var v2 = vec4(v1);
+
+            assert.equal(true, v1 !== v2);
+            assert.equal(true, vec4.equal(v1, v2));
         });
     });
 
