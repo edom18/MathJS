@@ -268,20 +268,27 @@
      * Rotate quaternion apply to a vector3.
      * @param {Float32Array} qt
      * @param {Float32Array} vec
+     * @param {Float32Array} dest
      */
-    quat.rotateQt = function (qt, vec) {
+    quat.rotateQt = function (qt, vec, dest) {
+
+        dest || (dest = vec3());
 
         var tmpX, tmpY, tmpZ, tmpW;
+
         tmpX = (((qt.w * vec.x) + (qt.y * vec.z)) - (qt.z * vec.y));
         tmpY = (((qt.w * vec.y) + (qt.z * vec.x)) - (qt.x * vec.z));
         tmpZ = (((qt.w * vec.z) + (qt.x * vec.y)) - (qt.y * vec.x));
         tmpW = (((qt.x * vec.x) + (qt.y * vec.y)) + (qt.z * vec.z));
 
-        return vec3(
-            ((((tmpW * qt.x) + (tmpX * qt.w)) - (tmpY * qt.z)) + (tmpZ * qt.y)),
-            ((((tmpW * qt.y) + (tmpY * qt.w)) - (tmpZ * qt.x)) + (tmpX * qt.z)),
-            ((((tmpW * qt.z) + (tmpZ * qt.w)) - (tmpX * qt.y)) + (tmpY * qt.x))
-        );
+        vec3.copy(
+            vec3(
+                ((((tmpW * qt.x) + (tmpX * qt.w)) - (tmpY * qt.z)) + (tmpZ * qt.y)),
+                ((((tmpW * qt.y) + (tmpY * qt.w)) - (tmpZ * qt.x)) + (tmpX * qt.z)),
+                ((((tmpW * qt.z) + (tmpZ * qt.w)) - (tmpX * qt.y)) + (tmpY * qt.x))
+            ), dest);
+
+        return dest;
     };
 
 
@@ -335,6 +342,23 @@
             dest[2] = q1[2] * t1 + q2[2] * t2;
             dest[3] = q1[3] * t1 + q2[3] * t2;
         }
+
+        return dest;
+    };
+
+    /**
+     * Copy quaternion.
+     * @param {Float32Array} qt
+     * @param {Float32Array} dest
+     */
+    quat.copy = function(qt, dest) {
+
+        dest || (dest = quat());
+
+        dest[0] = qt[0];
+        dest[1] = qt[1];
+        dest[2] = qt[2];
+        dest[3] = qt[3];
 
         return dest;
     };

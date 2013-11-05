@@ -223,6 +223,7 @@
         dest[0] = v[0];
         dest[1] = v[1];
         dest[2] = v[2];
+
         return dest;
     };
 
