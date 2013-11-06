@@ -395,6 +395,13 @@
             assert.equal(15 * 5, v2[1]);
         });
 
+        it('vec2.minus(vec, scalar)で、マイナスに反転したベクトルを返す', function () {
+            var v1 = vec2(10, 15);
+            var v2 = vec2.minus(v1, 3);
+            assert.equal(-10, v2[0]);
+            assert.equal(-15, v2[1]);
+        });
+
         it('vec2.dot(v1, v2)でベクトルの内積を得る', function () {
             var v1 = vec2(1, 2);
             var v2 = vec2(10, 11);
@@ -604,6 +611,14 @@
             assert.equal(10 * 5, v2[0]);
             assert.equal(15 * 5, v2[1]);
             assert.equal(20 * 5, v2[2]);
+        });
+
+        it('vec3.minus(vec)で、マイナスに反転したベクトルを返す', function () {
+            var v1 = vec3(10, 15, 20);
+            var v2 = vec3.minus(v1);
+            assert.equal(-10, v2[0]);
+            assert.equal(-15, v2[1]);
+            assert.equal(-20, v2[2]);
         });
 
         it('vec3.dot(v1, v2)でベクトルの内積を得る', function () {
@@ -816,6 +831,26 @@
             assert.equal(1, v[0]);
             assert.equal(2, v[1]);
             assert.equal(3, v[2]);
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        it('vec4.multiplyScalar(vec, scalar)で、スカラー積が得られる', function () {
+            var v1 = vec4(10, 15, 20, 33);
+            var v2 = vec4.multiplyScalar(v1, 3);
+            assert.equal(10 * 3, v2[0]);
+            assert.equal(15 * 3, v2[1]);
+            assert.equal(20 * 3, v2[2]);
+            assert.equal(33 * 3, v2[3]);
+        });
+
+        it('vec4.minus(vec)で、マイナスに反転したベクトルを返す', function () {
+            var v1 = vec4(10, 15, 20, 33);
+            var v2 = vec4.minus(v1);
+            assert.equal(-10, v2[0]);
+            assert.equal(-15, v2[1]);
+            assert.equal(-20, v2[2]);
+            assert.equal(-33, v2[3]);
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
