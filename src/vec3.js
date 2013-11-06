@@ -291,6 +291,23 @@
         dest[0] = v[0] * s;
         dest[1] = v[1] * s;
         dest[2] = v[2] * s;
+
+        return dest;
+    };
+
+    /**
+     * Multiple scalar with -1 to inverse vector sign.
+     * @param {Float32Array} v vec3
+     * @param {Float32Array} dest vec3
+     */
+    vec3.minus = function (v, dest) {
+
+        dest || (dest = vec3());
+
+        dest[0] = -v[0];
+        dest[1] = -v[1];
+        dest[2] = -v[2];
+
         return dest;
     };
 

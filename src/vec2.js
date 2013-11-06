@@ -215,6 +215,21 @@
     };
 
     /**
+     * Multiple scalar with -1 to inverse vector sign.
+     * @param {Float32Array} v vec2
+     * @param {Float32Array} dest vec2
+     */
+    vec2.minus = function (v, dest) {
+
+        dest || (dest = vec2());
+
+        dest[0] = -v[0];
+        dest[1] = -v[1];
+
+        return dest;
+    };
+
+    /**
      * Calc dot
      * @param {Float32Array} v1
      * @param {Float32Array} v2

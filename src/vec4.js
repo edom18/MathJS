@@ -290,10 +290,31 @@
      * @param {Float32Array} dest
      */
     vec4.multiplyScalar = function(v, s, dest) {
+
+        dest || (dest = vec4());
+
         dest[0] = v[0] * s;
         dest[1] = v[1] * s;
         dest[2] = v[2] * s;
         dest[3] = v[3] * s;
+
+        return dest;
+    };
+
+    /**
+     * Multiple scalar with -1 to inverse vector sign.
+     * @param {Float32Array} v vec4
+     * @param {Float32Array} dest vec4
+     */
+    vec4.minus = function (v, dest) {
+
+        dest || (dest = vec4());
+
+        dest[0] = -v[0];
+        dest[1] = -v[1];
+        dest[2] = -v[2];
+        dest[3] = -v[3];
+
         return dest;
     };
 
