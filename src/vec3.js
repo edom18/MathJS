@@ -108,70 +108,36 @@
         ret = new Float32Array(elements);
         Object.defineProperties(ret, {
             'x': {
-                get: function () {
-                    return this[0];
-                },
-                set: function (x) {
-                    this[0] = x;
-                }
+                get: MathJS.getEle1,
+                set: MathJS.setEle1
             },
             'y': {
-                get: function () {
-                    return this[1];
-                },
-                set: function (y) {
-                    this[1] = y;
-                }
+                get: MathJS.getEle2,
+                set: MathJS.setEle2
             },
             'z': {
-                get: function () {
-                    return this[2];
-                },
-                set: function (z) {
-                    this[2] = z;
-                }
+                get: MathJS.getEle3,
+                set: MathJS.setEle3
             },
             'xy': {
-                get: function () {
-                    return vec2(this.x, this.y);
-                },
-                set: function (v) {
-                    this[0] = v[0];
-                    this[1] = v[1];
-                }
+                get: MathJS.getEle12,
+                set: MathJS.setEle12
             },
             'r': {
-                get: function () {
-                    return this[0];
-                },
-                set: function (r) {
-                    this[0] = r;
-                }
+                get: MathJS.getEle1,
+                set: MathJS.setEle1
             },
             'g': {
-                get: function () {
-                    return this[1];
-                },
-                set: function (g) {
-                    this[1] = g;
-                }
+                get: MathJS.getEle2,
+                set: MathJS.setEle2
             },
             'b': {
-                get: function () {
-                    return this[2];
-                },
-                set: function (b) {
-                    this[2] = b;
-                }
+                get: MathJS.getEle3,
+                set: MathJS.setEle3
             },
             'rg': {
-                get: function () {
-                    return vec2(this[0], this[1]);
-                },
-                set: function (v) {
-                    this[0] = v[0];
-                    this[1] = v[1];
-                }
+                get: MathJS.getEle12,
+                set: MathJS.setEle12
             }
         });
 

@@ -9,33 +9,6 @@
 
     ///////////////////////////////////////////////////////
 
-    function getW() {
-        return this[0];
-    }
-    function setW(w) {
-        this[0] = w;
-    }
-    function getX() {
-        return this[1];
-    }
-    function setX(x) {
-        this[1] = x;
-    }
-    function getY() {
-        return this[2];
-    }
-    function setY(y) {
-        this[2] = y;
-    }
-    function getZ() {
-        return this[3];
-    }
-    function setZ(z) {
-        this[3] = z;
-    }
-
-    ///////////////////////////////////////////////////////
-
     /**
      * Make rotation quat
      * @param {number} w Component of w.
@@ -86,20 +59,20 @@
         ret = new Float32Array(elements);
         Object.defineProperties(ret, {
             'w': {
-                get: getW,
-                set: setW
+                get: MathJS.getEle1,
+                set: MathJS.setEle1
             },
             'x': {
-                get: getX,
-                set: setX
+                get: MathJS.getEle2,
+                set: MathJS.setEle2
             },
             'y': {
-                get: getY,
-                set: setY
+                get: MathJS.getEle3,
+                set: MathJS.setEle3
             },
             'z': {
-                get: getZ,
-                set: setZ
+                get: MathJS.getEle4,
+                set: MathJS.setEle4
             }
         });
 

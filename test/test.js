@@ -397,7 +397,7 @@
 
         it('vec2.minus(vec, scalar)で、マイナスに反転したベクトルを返す', function () {
             var v1 = vec2(10, 15);
-            var v2 = vec2.minus(v1, 3);
+            var v2 = vec2.minus(v1);
             assert.equal(-10, v2[0]);
             assert.equal(-15, v2[1]);
         });

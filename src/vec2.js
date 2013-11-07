@@ -89,20 +89,12 @@
         ret = new Float32Array(elements);
         Object.defineProperties(ret, {
             'x': {
-                get: function () {
-                    return this[0];
-                },
-                set: function (x) {
-                    this[0] = x;
-                }
+                get: MathJS.getEle1,
+                set: MathJS.setEle1
             },
             'y': {
-                get: function () {
-                    return this[1];
-                },
-                set: function (y) {
-                    this[1] = y;
-                }
+                get: MathJS.getEle2,
+                set: MathJS.setEle2
             }
         });
 
