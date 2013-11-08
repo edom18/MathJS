@@ -296,6 +296,8 @@
      */
     vec4.applyMatrix4 = function(v, mat, dest) {
 
+        dest || (dest = mat4());
+
         var x = v[0],
             y = v[1],
             z = v[2],
@@ -306,7 +308,7 @@
         dest[2] = mat[2] * x + mat[6] * y + mat[10] * z + mat[14] * w;
         dest[3] = mat[3] * x + mat[7] * y + mat[11] * z + mat[15] * w;
 
-        return ret;
+        return dest;
     };
 
     /**
