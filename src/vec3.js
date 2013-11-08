@@ -326,6 +326,27 @@
      * @param {Float32Array} mat
      * @param {Float32Array} dest
      */
+    vec3.applyMatrix3 = function(v, mat, dest) {
+
+        dest || (dest = vec3());
+
+        var x = v[0],
+            y = v[1],
+            z = v[2];
+
+        dest[0] = mat[0] * x + mat[3] * y + mat[6] * z;
+        dest[1] = mat[1] * x + mat[4] * y + mat[7] * z;
+        dest[2] = mat[2] * x + mat[5] * y + mat[8] * z;
+
+        return dest;
+    };
+
+    /**
+     * Applay matrix for the vector.
+     * @param {Float32Array} v
+     * @param {Float32Array} mat
+     * @param {Float32Array} dest
+     */
     vec3.applyMatrix4 = function(v, mat, dest) {
 
         dest || (dest = vec3());
