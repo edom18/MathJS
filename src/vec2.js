@@ -250,7 +250,7 @@
             v2x = v2[0],
             v2y = v2[1];
 
-        return v1x * v2y - v2x * v1y;
+        return v1x * v2y - v1y * v2x;
     };
 
     /**
