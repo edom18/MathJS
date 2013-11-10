@@ -416,6 +416,20 @@
             assert.equal(1 * 11 - 2 * 10, cross);
         });
 
+        it('vec2.norm(v)でベクトルのノルムを得る', function () {
+            var v = vec2(5, 3);
+            var norm = vec2.norm(v);
+
+            assert.equal(Math.sqrt(5 * 5 + 3 * 3), norm);
+        });
+
+        it('vec2.lengthSqr(v)でベクトルの長さの2乗を得る', function () {
+            var v = vec2(5, 3);
+            var len = vec2.lengthSqr(v);
+
+            assert.equal(5 * 5 + 3 * 3, len);
+        });
+
         it('vec2.toString(v)でカンマ区切りの文字列に変換できる', function () {
             var v = vec2(2, 3);
             assert.equal('2,3', vec2.toString(v));
