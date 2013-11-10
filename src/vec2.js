@@ -159,6 +159,15 @@
     };
 
     /**
+     * Calc norm from vector without sqrt.
+     * @param {Float32Array} v
+     */
+    vec2.lengthSqr = function (v) {
+        var x = v[0], y = v[1];
+        return x * x + y * y;
+    };
+
+    /**
      * Normalized vector
      * @param {Float32Array} v
      */
