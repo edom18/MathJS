@@ -409,6 +409,13 @@
             assert.equal(1 * 10 + 2 * 11, dot);
         });
 
+        it('vec2.cross(v1, v2)でベクトルの外積を得る', function () {
+            var v1 = vec2(1, 2);
+            var v2 = vec2(10, 11);
+            var cross = vec2.cross(v1, v2);
+            assert.equal(1 * 11 - 2 * 10, cross);
+        });
+
         it('vec2.toString(v)でカンマ区切りの文字列に変換できる', function () {
             var v = vec2(2, 3);
             assert.equal('2,3', vec2.toString(v));
