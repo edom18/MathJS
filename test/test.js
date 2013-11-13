@@ -185,6 +185,21 @@
             assert.equal(e[8], mat[8]);
         });
 
+        it('mat3.translate(mat, v[, dest])で平行移動行列を適用した行列を返す', function () {
+            var mat_1 = mat3(0, 1, 2, 3, 4, 5, 6, 7, 8);
+            var tmat = mat3.translate(mat_1, vec3(10, 20, 1));
+
+            assert.equal(0, tmat[0]);
+            assert.equal(1, tmat[1]);
+            assert.equal(2, tmat[2]);
+            assert.equal(3, tmat[3]);
+            assert.equal(4, tmat[4]);
+            assert.equal(5, tmat[5]);
+            assert.equal(0 * 10 + 3 * 20 + 6, tmat[6]);
+            assert.equal(1 * 10 + 4 * 20 + 7, tmat[7]);
+            assert.equal(2 * 10 + 5 * 20 + 8, tmat[8]);
+        });
+
         //浮動小数点の精度によりテスト通らないので保留
         0 && it('mat3.inverse(mat[, dest])で逆行列を求めることができる', function () {
             var m1 = mat3([
