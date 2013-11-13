@@ -200,6 +200,26 @@
             assert.equal(2 * 10 + 5 * 20 + 8, tmat[8]);
         });
 
+        it('mat3.scale(v[, dest])でスケール行列を生成できる', function () {
+
+            var mat_1 = mat3(0, 1, 2, 3, 4, 5, 6, 7, 8);
+            var scale = mat3.scale(vec2(1.5, 2.5));
+            mat_1 = mat3.multiply(scale, mat_1);
+
+            assert.equal(1.5 * 0 + 0 * 1 + 0 * 2, mat_1[0]);
+            assert.equal(1.5 * 3 + 0 * 4 + 0 * 5, mat_1[3]);
+            assert.equal(1.5 * 6 + 0 * 7 + 0 * 8, mat_1[6]);
+
+            assert.equal(0 * 0 + 2.5 * 1 + 0 * 2, mat_1[1]);
+            assert.equal(0 * 3 + 2.5 * 4 + 0 * 5, mat_1[4]);
+            assert.equal(0 * 6 + 2.5 * 7 + 0 * 8, mat_1[7]);
+
+            assert.equal(0 * 0 + 0 * 1 + 1 * 2, mat_1[2]);
+            assert.equal(0 * 3 + 0 * 4 + 1 * 5, mat_1[5]);
+            assert.equal(0 * 6 + 0 * 7 + 1 * 8, mat_1[8]);
+
+        });
+
         //浮動小数点の精度によりテスト通らないので保留
         0 && it('mat3.inverse(mat[, dest])で逆行列を求めることができる', function () {
             var m1 = mat3([
