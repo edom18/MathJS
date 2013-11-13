@@ -188,12 +188,10 @@
     mat3.rotate = function (rad, dest) {
 
         /*!
-        * OpenGLのZ軸による回転行列
-        * ここから3x3部分を抽出
-        * | cos(r) -sin(r)  0  0|
-        * | sin(r)  cos(r)  0  0|
-        * |      0      0   1  0|
-        * |      0      0   0  1|
+        * OpenGLのZ軸による回転行列（の2次元版）
+        * | cos(r) -sin(r)  0 |
+        * | sin(r)  cos(r)  0 |
+        * |      0      0   1 |
         */
 
         dest || (dest = mat3());
