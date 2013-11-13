@@ -180,6 +180,34 @@
         return dest;
     };
 
+    /**
+     * Create rotate matrix.
+     * @param {number} rad
+     * @param {Float32Array} dest
+     */
+    mat3.rotate = function (rad, dest) {
+
+        /*!
+        * OpenGLのZ軸による回転行列
+        * ここから3x3部分を抽出
+        * | cos(r) -sin(r)  0  0|
+        * | sin(r)  cos(r)  0  0|
+        * |      0      0   1  0|
+        * |      0      0   0  1|
+        */
+
+        dest || (dest = mat3());
+
+        var c = cos(rad);
+        var s = sin(rad);
+
+        dest[0] = c; dest[3] = -s; dest[6] = 0;
+        dest[1] = s; dest[4] =  c; dest[7] = 0;
+        dest[2] = 0; dest[5] =  0; dest[8] = 1;
+
+        return dest;
+    };
+
     /*!--------------------------------------------------
       EXPORTS
       ----------------------------------------------------- */
