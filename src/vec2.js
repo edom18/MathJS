@@ -317,8 +317,8 @@
 
         var x = v[0], y = v[1];
 
-        dest[0] = mat[0] * x + mat[3] * y;
-        dest[1] = mat[1] * x + mat[4] * y;
+        dest[0] = mat[0] * x + mat[3] * y + mat[6];
+        dest[1] = mat[1] * x + mat[4] * y + mat[7];
 
         return dest;
     };
