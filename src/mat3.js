@@ -180,6 +180,55 @@
         return dest;
     };
 
+    /**
+     * Create rotate matrix.
+     * @param {number} rad
+     * @param {Float32Array} dest
+     */
+    mat3.rotate = function (rad, dest) {
+
+        /*!
+        * OpenGLのZ軸による回転行列（の2次元版）
+        * | cos(r) -sin(r)  0 |
+        * | sin(r)  cos(r)  0 |
+        * |      0      0   1 |
+        */
+
+        dest || (dest = mat3());
+
+        var c = cos(rad);
+        var s = sin(rad);
+
+        dest[0] = c; dest[3] = -s; dest[6] = 0;
+        dest[1] = s; dest[4] =  c; dest[7] = 0;
+        dest[2] = 0; dest[5] =  0; dest[8] = 1;
+
+        return dest;
+    };
+
+    /**
+     * Apply translation to a matrix.
+     * @param {Float32Array} mat An applied matrix.
+     * @param {Float32Array} v A translate vector.
+     * @param {Float32Array} dest
+     */
+    mat3.translate = function (mat, v, dest) {
+        
+        dest || (dest = mat3());
+
+        var x = v[0], y = v[1];
+
+        dest[0] = mat[0]; dest[3] = mat[3];
+        dest[1] = mat[1]; dest[4] = mat[4];
+        dest[2] = mat[2]; dest[5] = mat[5];
+
+        dest[6] = mat[0] * x + mat[3] * y + mat[6];
+        dest[7] = mat[1] * x + mat[4] * y + mat[7];
+        dest[8] = mat[2] * x + mat[5] * y + mat[8];
+
+        return dest;
+    };
+
     /*!--------------------------------------------------
       EXPORTS
       ----------------------------------------------------- */

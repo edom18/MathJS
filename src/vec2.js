@@ -306,6 +306,24 @@
     };
 
     /**
+     * Apply matrix3 for a vector.
+     * @param {Float32Array} v vector2
+     * @param {Float32Array} mat Matrix3
+     * @param {Float32Array} dest vector2
+     */
+    vec2.applyMatrix3 = function (v, mat, dest) {
+
+        dest || (dest = vec2());
+
+        var x = v[0], y = v[1];
+
+        dest[0] = mat[0] * x + mat[3] * y + mat[6];
+        dest[1] = mat[1] * x + mat[4] * y + mat[7];
+
+        return dest;
+    };
+
+    /**
      * To string vector.
      * @param {Float32Array} v
      * @return {string}
