@@ -162,6 +162,30 @@
             assert.equal(9, mat[8]);
         });
 
+        it('mat3.rotate(rad[, dest])で角度「rad」回転行列を作れる', function () {
+            var rad = 30 * Math.PI / 180;
+            var mat = mat3.rotate(rad);
+
+            var c = Math.cos(rad);
+            var s = Math.sin(rad);
+
+            var e = new Float32Array(9);
+            e[0] = c; e[3] = -s; e[6] = 0;
+            e[1] = s; e[4] =  c; e[7] = 0;
+            e[2] = 0; e[5] =  0; e[8] = 1;
+
+            assert.equal(e[0], mat[0]);
+            assert.equal(e[3], mat[3]);
+            assert.equal(e[6], mat[6]);
+            assert.equal(e[1], mat[1]);
+            assert.equal(e[4], mat[4]);
+            assert.equal(e[7], mat[7]);
+            assert.equal(e[2], mat[2]);
+            assert.equal(e[5], mat[5]);
+            assert.equal(e[8], mat[8]);
+        });
+
+        //浮動小数点の精度によりテスト通らないので保留
         0 && it('mat3.inverse(mat[, dest])で逆行列を求めることができる', function () {
             var m1 = mat3([
                 51, 2, 9, 4,
@@ -429,6 +453,16 @@
 
             assert.equal(5 * 5 + 3 * 3, len);
         });
+
+        it('vec2.applymatrix3(v, mat, dest)でMatrix3をベクトルに適用できる', function () {
+            var v = vec2(5, 12);
+            var mat = mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            var result = vec2.applyMatrix3(v, mat);
+
+            assert.equal(1 * 5 + 4 * 12, result[0]);
+            assert.equal(2 * 5 + 5 * 12, result[1]);
+        });
+
 
         it('vec2.toString(v)でカンマ区切りの文字列に変換できる', function () {
             var v = vec2(2, 3);
