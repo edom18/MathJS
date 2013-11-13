@@ -474,8 +474,8 @@
             var mat = mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
             var result = vec2.applyMatrix3(v, mat);
 
-            assert.equal(1 * 5 + 4 * 12, result[0]);
-            assert.equal(2 * 5 + 5 * 12, result[1]);
+            assert.equal(1 * 5 + 4 * 12 + 7, result[0]);
+            assert.equal(2 * 5 + 5 * 12 + 8, result[1]);
         });
 
 
