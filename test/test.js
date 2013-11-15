@@ -764,6 +764,24 @@
             assert.equal(true, v1 !== v2);
             assert.equal(true, vec3.equal(v1, v2));
         });
+
+        it('vec3(x, vec2)でvec3型を返す', function () {
+            var v2 = vec2(2, 3);
+            var v3 = vec3(1, v2);
+
+            assert.equal(1, v3[0]);
+            assert.equal(2, v3[1]);
+            assert.equal(3, v3[2]);
+        });
+
+        it('vec3(vec2, z)でvec3型を返す', function () {
+            var v2 = vec2(1, 2);
+            var v3 = vec3(v2, 3);
+
+            assert.equal(1, v3[0]);
+            assert.equal(2, v3[1]);
+            assert.equal(3, v3[2]);
+        });
     });
 
     describe('vec4テスト', function () {
@@ -987,6 +1005,47 @@
 
             assert.equal(true, v1 !== v2);
             assert.equal(true, vec4.equal(v1, v2));
+        });
+
+        it('vec4(x, vec3)でvec4型を返す', function () {
+            var v3 = vec3(2, 3, 4);
+            var v4 = vec4(1, v3);
+
+            assert.equal(1, v4[0]);
+            assert.equal(2, v4[1]);
+            assert.equal(3, v4[2]);
+            assert.equal(4, v4[3]);
+        });
+
+        it('vec4(vec2, vec2)でvec4型を返す', function () {
+            var v2_1 = vec2(1, 2);
+            var v2_2 = vec2(3, 4);
+            var v4 = vec4(v2_1, v2_2);
+
+            assert.equal(1, v4[0]);
+            assert.equal(2, v4[1]);
+            assert.equal(3, v4[2]);
+            assert.equal(4, v4[3]);
+        });
+
+        it('vec4(x, vec2, w)でvec4型を返す', function () {
+            var v2 = vec2(2, 3);
+            var v4 = vec4(1, v2, 4);
+
+            assert.equal(1, v4[0]);
+            assert.equal(2, v4[1]);
+            assert.equal(3, v4[2]);
+            assert.equal(4, v4[3]);
+        });
+
+        it('vec4(vec3, w)でvec4型を返す', function () {
+            var v3 = vec3(1, 2, 3);
+            var v4 = vec4(v3, 4);
+
+            assert.equal(1, v4[0]);
+            assert.equal(2, v4[1]);
+            assert.equal(3, v4[2]);
+            assert.equal(4, v4[3]);
         });
     });
 
