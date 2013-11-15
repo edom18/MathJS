@@ -13,8 +13,8 @@
      * @param {number} z Component of z.
      * @param {number} w Component of w.
      */
-    function vec4(x, y, z, w) {
-        return vec4.create(x, y, z, w);
+    function vec4() {
+        return vec4.create.apply(vec4, arguments);
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -89,33 +89,69 @@
      * @param {?number} z
      * @param {?number} w
      */
-    vec4.create = function(x, y, z, w) {
+    vec4.create = function() {
 
         var elements = [],
-            ret;
+            arr;
 
-        if (Array.isArray(x) || Float32Array.prototype.isPrototypeOf(x)) {
-            elements = new Float32Array(x);
-        }
-        else if (x === undefined) {
-            elements = [0, 0, 0, 0];
-        }
-        else if (y === undefined) {
-            elements = [x, x, x, x];
-        }
-        else if (z === undefined) {
-            elements = [x, y, 0, 0];
-        }
-        else if (w === undefined) {
-            elements = [x, y, z, 0];
-        }
-        else {
-            elements = [x, y, z, w];
+        for (var i = 0, l = arguments.length; i < l; i++) {
+            arr = arguments[i];
+            if (Float32Array.prototype.isPrototypeOf(arr)) {
+                for (var j = 0, k = arr.length; j < k; j++) {
+                    elements = elements.concat(arr[j]);
+                }
+            }
+            else {
+                elements = elements.concat(arguments[i]);
+            }
         }
 
-        ret = new Float32Array(elements);
 
-        Object.defineProperties(ret, {
+        switch (elements.length) {
+            case 0:
+                elements[0] = 0;
+                elements[1] = 0;
+                elements[2] = 0;
+                elements[3] = 0;
+                break;
+            case 1:
+                elements[1] = elements[0];
+                elements[2] = elements[0];
+                elements[3] = elements[0];
+                break;
+            case 2:
+                elements[2] = 0;
+                elements[3] = 0;
+                break;
+            case 3:
+                elements[3] = 0;
+                break;
+        }
+
+        elements = new Float32Array(elements);
+
+        //if (Array.isArray(x) || Float32Array.prototype.isPrototypeOf(x)) {
+        //    elements = new Float32Array(x);
+        //}
+        //else if (x === undefined) {
+        //    elements = [0, 0, 0, 0];
+        //}
+        //else if (y === undefined) {
+        //    elements = [x, x, x, x];
+        //}
+        //else if (z === undefined) {
+        //    elements = [x, y, 0, 0];
+        //}
+        //else if (w === undefined) {
+        //    elements = [x, y, z, 0];
+        //}
+        //else {
+        //    elements = [x, y, z, w];
+        //}
+
+        //ret = new Float32Array(elements);
+
+        Object.defineProperties(elements, {
             'x': {
                 get: MathJS.getEle1,
                 set: MathJS.setEle1
@@ -162,7 +198,7 @@
             }
         });
 
-        return ret;
+        return elements;
     };
 
 

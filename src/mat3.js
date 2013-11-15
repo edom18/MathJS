@@ -207,6 +207,24 @@
     };
 
     /**
+     * @param {Float32Array} v for scale
+     * @param {Float32Array} dest
+     */
+    mat3.scale = function (v, dest) {
+
+        dest || (dest = {});
+
+        var x = v[0], y = v[1];
+
+        dest[0] = x; dest[3] = 0; dest[6] = 0;
+        dest[1] = 0; dest[4] = y; dest[7] = 0;
+        dest[2] = 0; dest[5] = 0; dest[8] = 1;
+
+        return dest;
+    };
+
+
+    /**
      * Apply translation to a matrix.
      * @param {Float32Array} mat An applied matrix.
      * @param {Float32Array} v A translate vector.

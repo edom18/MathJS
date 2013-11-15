@@ -12,8 +12,8 @@
      * @param {?number} y Position of y.
      * @param {?number} z Position of z.
      */
-    function vec3(x, y, z) {
-        return vec3.create(x, y, z);
+    function vec3() {
+        return vec3.create.apply(vec3, arguments);
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -84,29 +84,60 @@
      * @param {?number} y Position of y.
      * @param {?number} z Position of z.
      */
-    vec3.create = function(x, y, z) {
+    vec3.create = function() {
 
         var elements = [],
-            ret;
+            arr;
 
-        if (Array.isArray(x) || Float32Array.prototype.isPrototypeOf(x)) {
-            elements = x;
-        }
-        else if (x === undefined) {
-            elements = [0, 0, 0];
-        }
-        else if (y === undefined) {
-            elements = [x, x, x];
-        }
-        else if (z === undefined) {
-            elements = [x, y, 0];
-        }
-        else {
-            elements = [x, y, z];
+        for (var i = 0, l = arguments.length; i < l; i++) {
+            arr = arguments[i];
+            if (Float32Array.prototype.isPrototypeOf(arr)) {
+                for (var j = 0, k = arr.length; j < k; j++) {
+                    elements = elements.concat(arr[j]);
+                }
+            }
+            else {
+                elements = elements.concat(arguments[i]);
+            }
         }
 
-        ret = new Float32Array(elements);
-        Object.defineProperties(ret, {
+
+        switch (elements.length) {
+            case 0:
+                elements[0] = 0;
+                elements[1] = 0;
+                elements[2] = 0;
+                break;
+            case 1:
+                elements[1] = elements[0];
+                elements[2] = elements[0];
+                break;
+            case 2:
+                elements[2] = 0;
+                break;
+        }
+
+        elements = new Float32Array(elements);
+
+        //if (Array.isArray(x) || Float32Array.prototype.isPrototypeOf(x)) {
+        //    elements = x;
+        //}
+        //else if (x === undefined) {
+        //    elements = [0, 0, 0];
+        //}
+        //else if (y === undefined) {
+        //    elements = [x, x, x];
+        //}
+        //else if (z === undefined) {
+        //    elements = [x, y, 0];
+        //}
+        //else {
+        //    elements = [x, y, z];
+        //}
+
+        //ret = new Float32Array(elements);
+
+        Object.defineProperties(elements, {
             'x': {
                 get: MathJS.getEle1,
                 set: MathJS.setEle1
@@ -141,7 +172,7 @@
             }
         });
 
-        return ret;
+        return elements;
     };
 
 
