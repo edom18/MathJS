@@ -11,8 +11,8 @@
      * @param {number|Array.<number>} x Position of x.
      * @param {?number} y Position of y.
      */
-    function vec2(x, y) {
-        return vec2.create(x, y);
+    function vec2() {
+        return vec2.create.apply(vec2, arguments);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -68,26 +68,51 @@
      * @param {number|Array.<number>} x Position of x.
      * @param {?number} y Position of y.
      */
-    vec2.create = function(x, y) {
+    vec2.create = function() {
 
         var elements = [],
-            ret;
+            arr;
 
-        if (Array.isArray(x) || Float32Array.prototype.isPrototypeOf(x)) {
-            elements = new Float32Array(x);
-        }
-        else if (x === undefined) {
-            elements = [0, 0];
-        }
-        else if (y === undefined) {
-            elements = [x, x];
-        }
-        else {
-            elements = [x, y];
+        for (var i = 0, l = arguments.length; i < l; i++) {
+            arr = arguments[i];
+            if (Float32Array.prototype.isPrototypeOf(arr)) {
+                for (var j = 0, k = arr.length; j < k; j++) {
+                    elements = elements.concat(arr[j]);
+                }
+            }
+            else {
+                elements = elements.concat(arguments[i]);
+            }
         }
 
-        ret = new Float32Array(elements);
-        Object.defineProperties(ret, {
+
+        switch (elements.length) {
+            case 0:
+                elements[0] = 0;
+                elements[1] = 0;
+                break;
+            case 1:
+                elements[1] = elements[0];
+                break;
+        }
+
+        elements = new Float32Array(elements);
+
+        //if (Array.isArray(x) || Float32Array.prototype.isPrototypeOf(x)) {
+        //    elements = new Float32Array(x);
+        //}
+        //else if (x === undefined) {
+        //    elements = [0, 0];
+        //}
+        //else if (y === undefined) {
+        //    elements = [x, x];
+        //}
+        //else {
+        //    elements = [x, y];
+        //}
+        //ret = new Float32Array(elements);
+        
+        Object.defineProperties(elements, {
             'x': {
                 get: MathJS.getEle1,
                 set: MathJS.setEle1
@@ -98,7 +123,7 @@
             }
         });
 
-        return ret;
+        return elements;
     };
 
 
