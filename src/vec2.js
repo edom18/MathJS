@@ -195,17 +195,21 @@
     /**
      * Normalized vector
      * @param {Float32Array} v
+     * @param {Float32Array} dest
      */
-    vec2.normalize = function(v) {
+    vec2.normalize = function(v, dest) {
+
+        dest || (dest = vec2());
+
         var nrm = vec2.norm(v);
 
         if (nrm !== 0) {
             nrm = 1 / nrm;
-            v[0] *= nrm;
-            v[1] *= nrm;
+            dest[0] = v[0] * nrm;
+            dest[1] = v[1] * nrm;
         }
 
-        return v;
+        return dest;
     };
 
     /**
