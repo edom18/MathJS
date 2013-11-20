@@ -230,7 +230,20 @@
      * @param {Float32Array} v A translate vector.
      * @param {Float32Array} dest
      */
-    mat3.translate = function (mat, v, dest) {
+    mat3.translate = function (v, dest) {
+        
+        dest || (dest = mat3());
+
+        var x = v[0], y = v[1];
+
+        dest[0] = 1; dest[3] = 0; dest[6] = x;
+        dest[1] = 0; dest[4] = 1; dest[7] = y;
+        dest[2] = 0; dest[5] = 0; dest[8] = 1;
+
+        return dest;
+    };
+
+    mat3.translate2 = function (mat, v, dest) {
         
         dest || (dest = mat3());
 
