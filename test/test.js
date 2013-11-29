@@ -508,6 +508,26 @@
             assert.equal(true, v1 !== v2);
             assert.equal(true, vec2.equal(v1, v2));
         });
+
+        ///////////////////////////////////////////////////////////////////////////////////
+
+        it('vec2(vec3)でvec3をvec2に変換できる', function () {
+            var v3 = vec3(1, 3, 5);
+            var v2 = vec2(v3);
+
+            assert.equal(1, v2[0]);
+            assert.equal(3, v2[1]);
+            assert.equal(undefined, v2[2]);
+        });
+
+        it('vec2(vec4)でvec4をvec2に変換できる', function () {
+            var v4 = vec3(1, 3, 5, 7);
+            var v2 = vec2(v4);
+
+            assert.equal(1, v2[0]);
+            assert.equal(3, v2[1]);
+            assert.equal(undefined, v2[2]);
+        });
     });
 
 
@@ -776,6 +796,18 @@
             assert.equal(1, v3[0]);
             assert.equal(2, v3[1]);
             assert.equal(3, v3[2]);
+        });
+
+        //////////////////////////////////////////////////////////////
+
+        it('vec3(vec4)でvec4型をvec3型にして返す', function () {
+            var v4 = vec4(1, 3, 5, 7);
+            var v3 = vec3(v4);
+
+            assert.equal(1, v3[0]);
+            assert.equal(3, v3[1]);
+            assert.equal(5, v3[2]);
+            assert.equal(undefined, v3[3]);
         });
     });
 
