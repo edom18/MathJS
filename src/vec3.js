@@ -101,6 +101,9 @@
             }
         }
 
+        if (elements.length > 3) {
+            elements.length = 3;
+        }
 
         switch (elements.length) {
             case 0:
