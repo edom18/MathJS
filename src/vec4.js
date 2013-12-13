@@ -106,6 +106,9 @@
             }
         }
 
+        if (elements.length > 4) {
+            elements.length = 4;
+        }
 
         switch (elements.length) {
             case 0:

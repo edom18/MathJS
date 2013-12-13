@@ -75,6 +75,7 @@
 
         for (var i = 0, l = arguments.length; i < l; i++) {
             arr = arguments[i];
+
             if (Float32Array.prototype.isPrototypeOf(arr)) {
                 for (var j = 0, k = arr.length; j < k; j++) {
                     elements = elements.concat(arr[j]);
@@ -85,6 +86,9 @@
             }
         }
 
+        if (elements.length > 2) {
+            elements.length = 2;
+        }
 
         switch (elements.length) {
             case 0:

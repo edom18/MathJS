@@ -101,6 +101,9 @@
             }
         }
 
+        if (elements.length > 3) {
+            elements.length = 3;
+        }
 
         switch (elements.length) {
             case 0:
@@ -118,24 +121,6 @@
         }
 
         elements = new Float32Array(elements);
-
-        //if (Array.isArray(x) || Float32Array.prototype.isPrototypeOf(x)) {
-        //    elements = x;
-        //}
-        //else if (x === undefined) {
-        //    elements = [0, 0, 0];
-        //}
-        //else if (y === undefined) {
-        //    elements = [x, x, x];
-        //}
-        //else if (z === undefined) {
-        //    elements = [x, y, 0];
-        //}
-        //else {
-        //    elements = [x, y, z];
-        //}
-
-        //ret = new Float32Array(elements);
 
         Object.defineProperties(elements, {
             'x': {
@@ -344,9 +329,9 @@
             v2y = v2[1],
             v2z = v2[2];
 
-        dest[0] = (v2y * v1z) - (v2z * v1y);
-        dest[1] = (v2z * v1x) - (v2x * v1z);
-        dest[2] = (v2x * v1y) - (v2y * v1x);
+        dest[0] = (v1y * v2z) - (v1z * v2y);
+        dest[1] = (v1z * v2x) - (v1x * v2z);
+        dest[2] = (v1x * v2y) - (v1y * v2x);
 
         return dest;
     };
