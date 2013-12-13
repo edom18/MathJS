@@ -122,24 +122,6 @@
 
         elements = new Float32Array(elements);
 
-        //if (Array.isArray(x) || Float32Array.prototype.isPrototypeOf(x)) {
-        //    elements = x;
-        //}
-        //else if (x === undefined) {
-        //    elements = [0, 0, 0];
-        //}
-        //else if (y === undefined) {
-        //    elements = [x, x, x];
-        //}
-        //else if (z === undefined) {
-        //    elements = [x, y, 0];
-        //}
-        //else {
-        //    elements = [x, y, z];
-        //}
-
-        //ret = new Float32Array(elements);
-
         Object.defineProperties(elements, {
             'x': {
                 get: MathJS.getEle1,
