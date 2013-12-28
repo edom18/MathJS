@@ -1,0 +1,24 @@
+{
+  "name": "MathJS",
+  "version": "0.1.0",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-coffee": "*",
+    "grunt-contrib-compass": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-simple-ejs": "*",
+    "grunt-growl": "*",
+    "grunt-usemin": "*"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}
