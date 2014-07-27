@@ -8,8 +8,16 @@
         tan = Math.tan,
         sqrt = Math.sqrt,
         PI   = Math.PI,
+        abs  = Math.abs,
 
         DEG_TO_RAD = PI / 180;
+
+    /**
+     * Epsilon
+     */
+    function  epsilon(value) {
+		return abs(value) < 0.000001 ? 0 : value;
+    }
 
     /**
      * mat4
@@ -148,6 +156,33 @@
 
         return dest;
     };
+
+    
+    /**
+     * Matrix to string as CSS matrix.
+     * @param {Float32Array} mat
+     */
+    mat4.toCSSMatrixString = function (mat) {
+        return 'matrix3d('    +
+            epsilon(mat[0])   + ',' +
+            epsilon(mat[1])  + ',' +
+            epsilon(mat[2])   + ',' +
+            epsilon(mat[3])   + ',' +
+            epsilon(mat[4])   + ',' +
+            epsilon(mat[5])  + ',' +
+            epsilon(mat[6])   + ',' +
+            epsilon(mat[7])   + ',' +
+            epsilon(mat[8])   + ',' +
+            epsilon(mat[9])  + ',' +
+            epsilon(mat[10])  + ',' +
+            epsilon(mat[11])  + ',' +
+            epsilon(mat[12])  + ',' +
+            epsilon(mat[13]) + ',' +
+            epsilon(mat[14])  + ',' +
+            epsilon(mat[15])  +
+        ')';
+    };
+
 
     /**
      * Make frustum
