@@ -4,6 +4,9 @@
     /**
      * Create a sphere.
      *
+     * 極地から順に徐々に赤道へ角度を増やしながら、
+     * 球体の円周上に頂点を生成していく。
+     *
      * @param {number} row
      * @param {number} column
      * @param {number} radius
