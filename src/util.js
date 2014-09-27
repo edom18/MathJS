@@ -556,7 +556,7 @@ function when(arr) {
 
     while(i--) {
         (function (index) {
-            arr[i].done(function (res) {
+            arr[index].done(function (res) {
                 _watch(res, index);
             });
         }(i));
