@@ -59,11 +59,11 @@
             }
         }
 
-        this.position = position;
-        this.normal   = normal;
-        this.color    = colorArr;
-        this.texture  = st;
-        this.index    = index;
+        this.position     = position;
+        this.normal       = normal;
+        this.color        = colorArr;
+        this.textureCoord = st;
+        this.index        = index;
     }
 
     /*! ----------------------------------------------------
