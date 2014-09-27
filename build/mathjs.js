@@ -3121,9 +3121,9 @@ ns.util = util;
 
             for (var col_i = 0; col_i <= column; col_i++) {
                 var tr = Math.PI * 2 / column * col_i;
-                var tx = (rr * irad * orad) * Math.cos(tr);
+                var tx = (rr * irad + orad) * Math.cos(tr);
                 var ty = ry * irad;
-                var tz = (rr * irad * orad) * Math.sin(tr);
+                var tz = (rr * irad + orad) * Math.sin(tr);
 
                 var rx = rr * Math.cos(tr);
                 var rz = rr * Math.sin(tr);
