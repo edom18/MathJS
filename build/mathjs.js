@@ -1418,8 +1418,8 @@ ns.util = util;
         dest || (dest = mat4());
 
         vec3.normalize(vec3.sub(eye, target, z));
-        vec3.normalize(vec3.cross(z, up, x));
-        vec3.normalize(vec3.cross(x, z, y));
+        vec3.normalize(vec3.cross(up, z, x));
+        vec3.normalize(vec3.cross(z, x, y));
 
         tx = vec3.dot(eye, x);
         ty = vec3.dot(eye, y);
