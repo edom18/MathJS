@@ -414,7 +414,7 @@ function ajax(url, opt) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200 || xhr.status === 201) {
-                def.resolve(JSON.parse(xhr.responseText), xhr);
+                def.resolve(xhr.responseText, xhr);
                 def = null;
             }
             else {
