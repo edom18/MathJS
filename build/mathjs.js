@@ -414,7 +414,7 @@ function ajax(url, opt) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200 || xhr.status === 201) {
-                def.resolve(JSON.parse(xhr.responseText), xhr);
+                def.resolve(xhr.responseText, xhr);
                 def = null;
             }
             else {
@@ -556,7 +556,7 @@ function when(arr) {
 
     while(i--) {
         (function (index) {
-            arr[i].done(function (res) {
+            arr[index].done(function (res) {
                 _watch(res, index);
             });
         }(i));
@@ -1019,8 +1019,16 @@ ns.util = util;
         tan = Math.tan,
         sqrt = Math.sqrt,
         PI   = Math.PI,
+        abs  = Math.abs,
 
         DEG_TO_RAD = PI / 180;
+
+    /**
+     * Epsilon
+     */
+    function  epsilon(value) {
+		return abs(value) < 0.000001 ? 0 : value;
+    }
 
     /**
      * mat4
@@ -1159,6 +1167,33 @@ ns.util = util;
 
         return dest;
     };
+
+    
+    /**
+     * Matrix to string as CSS matrix.
+     * @param {Float32Array} mat
+     */
+    mat4.toCSSMatrixString = function (mat) {
+        return 'matrix3d('    +
+            epsilon(mat[0])   + ',' +
+            epsilon(mat[1])  + ',' +
+            epsilon(mat[2])   + ',' +
+            epsilon(mat[3])   + ',' +
+            epsilon(mat[4])   + ',' +
+            epsilon(mat[5])  + ',' +
+            epsilon(mat[6])   + ',' +
+            epsilon(mat[7])   + ',' +
+            epsilon(mat[8])   + ',' +
+            epsilon(mat[9])  + ',' +
+            epsilon(mat[10])  + ',' +
+            epsilon(mat[11])  + ',' +
+            epsilon(mat[12])  + ',' +
+            epsilon(mat[13]) + ',' +
+            epsilon(mat[14])  + ',' +
+            epsilon(mat[15])  +
+        ')';
+    };
+
 
     /**
      * Make frustum
@@ -1383,8 +1418,8 @@ ns.util = util;
         dest || (dest = mat4());
 
         vec3.normalize(vec3.sub(eye, target, z));
-        vec3.normalize(vec3.cross(z, up, x));
-        vec3.normalize(vec3.cross(x, z, y));
+        vec3.normalize(vec3.cross(up, z, x));
+        vec3.normalize(vec3.cross(z, x, y));
 
         tx = vec3.dot(eye, x);
         ty = vec3.dot(eye, y);
@@ -2991,5 +3026,375 @@ ns.util = util;
       EXPORTS
       ----------------------------------------------------- */
     exports.vec4 = vec4;
+
+}(window, document, window));
+
+(function () {
+    'use strict';
+
+    function Plane(width, height, row, column, color) {
+        var position = [];
+        var normal   = [];
+        var colorArr = [];
+        var st       = [];
+        var index    = [];
+
+        for (var col_i = 0; col_i <= column; col_i++) {
+            for (var row_i = 0; row_i <= row; row_i++) {
+                var rowUnit = (row_i / row) * 2 - 1;
+                var colUnit = -((col_i / column) * 2 - 1);
+                var x = width  * colUnit;
+                var z = height * rowUnit;
+                var stx = -((1 / column) * col_i);
+                var stz = (1 / row) * row_i;
+
+                var tc = color ? color : [1, 1, 1, 1];
+
+                position.push(x, 0, z);
+                normal.push(0, 1, 0);
+                colorArr.push(tc[0], tc[1], tc[2], tc[3]);
+                st.push(stx, stz);
+            }
+        }
+
+        // Generate indecies.
+        for (col_i = 0; col_i < column; col_i++) {
+            for (row_i = 0; row_i < row; row_i++) {
+                var base = ((column + 1) * row_i) + col_i;
+                var idx0 = base;
+                var idx1 = base + 1;
+                var idx2 = base + column + 1;
+                var idx3 = base + column + 2;
+
+                index.push(idx0, idx1, idx2);
+                index.push(idx3, idx2, idx1);
+            }
+        }
+
+        this.position     = position;
+        this.normal       = normal;
+        this.color        = colorArr;
+        this.textureCoord = st;
+        this.index        = index;
+    }
+
+    /*! ----------------------------------------------------
+        EXPORTS.
+    -------------------------------------------------------- */
+    window.Plane = Plane;
+
+}());
+
+(function () {
+    'use strict';
+
+    /**
+     * Create a sphere.
+     *
+     * 極地から順に徐々に赤道へ角度を増やしながら、
+     * 球体の円周上に頂点を生成していく。
+     *
+     * @param {number} row
+     * @param {number} column
+     * @param {number} radius
+     * @param {Array<number>} color
+     *
+     * @return {Object}
+     */
+    function Sphere(row, column, radius, color) {
+        var position = [];
+        var normal   = [];
+        var colorArr = [];
+        var st       = [];
+        var index    = [];
+
+        // Generate position, normal, color, texture coord.
+        for (var row_i = 0; row_i <= row; row_i++) {
+            var r  = Math.PI / row * row_i;
+            var ry = Math.cos(r);
+            var rr = Math.sin(r);
+
+            for (var col_i = 0; col_i <= column; col_i++) {
+                var tr = Math.PI * 2 / column * col_i;
+
+                var tx = rr * radius * Math.cos(tr);
+                var ty = ry * radius;
+                var tz = rr * radius * Math.sin(tr);
+
+                var rx = rr * Math.cos(tr);
+                var rz = rr * Math.sin(tr);
+
+                var tc = color ? color : [1, 1, 1, 1];
+
+                position.push(tx, ty, tz);
+                normal.push(rx, ry, rz);
+                colorArr.push(tc[0], tc[1], tc[2], tc[3]);
+                st.push(1 - 1 / column * col_i, 1 / row * row_i);
+            }
+        }
+
+        // Generate indecies.
+        for (r = 0, row_i = 0; row_i < row; row_i++) {
+            for (col_i = 0; col_i < column; col_i++) {
+                r = (column + 1) * row_i + col_i;
+                var idx0 = r;
+                var idx1 = r + 1;
+                var idx2 = r + column + 2;
+                var idx3 = r + column + 1;
+                index.push(idx0, idx1, idx2);
+                index.push(idx0, idx2, idx3);
+            }
+        }
+
+        this.position     = position;
+        this.normal       = normal;
+        this.color        = colorArr;
+        this.textureCoord = st;
+        this.index        = index;
+    }
+
+    /*! ----------------------------------------------------
+        EXPORTS.
+    -------------------------------------------------------- */
+    window.Sphere = Sphere;
+
+}());
+
+(function () {
+    'use strict';
+
+    function Torus(row, column, irad, orad, color) {
+        var position = [];
+        var normal   = [];
+        var colorArr = [];
+        var st       = [];
+        var index    = [];
+
+        for (var row_i = 0; row_i <= row; row_i++) {
+            var r  = Math.PI * 2 / row * row_i;
+            var rr = Math.cos(r);
+            var ry = Math.sin(r);
+
+            for (var col_i = 0; col_i <= column; col_i++) {
+                var tr = Math.PI * 2 / column * col_i;
+                var tx = (rr * irad + orad) * Math.cos(tr);
+                var ty = ry * irad;
+                var tz = (rr * irad + orad) * Math.sin(tr);
+
+                var rx = rr * Math.cos(tr);
+                var rz = rr * Math.sin(tr);
+
+                var tc = color ? color : [1, 1, 1, 1];
+
+                var rs = 1 / column * col_i;
+                var rt = 1 / row * row_i + 0.5;
+
+                if (rt > 1.0) {
+                    rt -= 1.0;
+                }
+
+                rt = 1.0 - rt;
+
+                position.push(tx, ty, tz);
+                normal.push(rx, ry, rz);
+                colorArr.push(tc[0], tc[1], tc[2], tc[3]);
+                st.push(rs, rt);
+            }
+        }
+
+        for (row_i = 0; row_i < row; row_i++) {
+            for (col_i = 0; col_i < column; col_i++) {
+                r = (column + 1) * row_i + col_i;
+                var idx0 = r;
+                var idx1 = r + column + 1;
+                var idx2 = r + 1;
+                var idx3 = r + column + 2;
+                index.push(idx0, idx1, idx2);
+                index.push(idx1, idx3, idx2);
+            }
+        }
+
+        this.position     = position;
+        this.normal       = normal;
+        this.color        = colorArr;
+        this.textureCoord = st;
+        this.index        = index;
+    }
+
+    /*! --------------------------------------------------------
+        EXPORTS.
+    ------------------------------------------------------------ */
+    window.Torus = Torus;
+
+}());
+
+(function (win, doc, exports) {
+
+    'use strict';
+
+    function Xorshift(seed) {
+
+        var i, t, vec, w, x, y, z, _i;
+
+        if (seed == null) {
+            seed = +new Date();
+        }
+
+        x = 123456789;
+        y = 362436069;
+        z = 521288629;
+        w = 88675123;
+        t = 0;
+        vec = [1812433254, 3713160357, 3109174145, 64984499];
+
+        for (i = _i = 0; _i <= 4; i = ++_i) {
+            vec[i - 1] = seed = 1812433253 * (seed ^ (seed >> 30)) + i;
+        }
+
+        this.random = function() {
+            var _ref;
+            t = vec[0];
+            w = vec[3];
+            _ref = [vec[1], vec[2], w], vec[0] = _ref[0], vec[1] = _ref[1], vec[2] = _ref[2];
+            t ^= t << 11;
+            t ^= t >> 8;
+            w ^= w >> 19;
+            w ^= t;
+            vec[3] = w;
+            return w * 2.3283064365386963e-10;
+        };
+    }
+
+    ////////////////////////////////
+
+    function PerlinNoise(seed, octave) {
+        var i, p, _i, _j, _p;
+
+        this.octave = octave != null ? octave : 1;
+
+        random = new Xorshift(seed).random;
+
+        _p = [];
+        for (i = _i = 0; _i < 256; i = ++_i) {
+            _p[i] = floor(random() * 256);
+        }
+
+        p = new Array(512);
+
+        for (i = _j = 0; _j < 512; i = ++_j) {
+            p[i] = _p[i & 255];
+        }
+
+        this.p = p;
+    }
+
+    PerlinNoise.prototype._noise = function(x, y, z) {
+        var A, AA, AB, B, BA, BB, X, Y, Z, p, u, v, w;
+        if (y == null) {
+            y = 0;
+        }
+        if (z == null) {
+            z = 0;
+        }
+        X = floor(x) & 255;
+        Y = floor(y) & 255;
+        Z = floor(z) & 255;
+        x -= floor(x);
+        y -= floor(y);
+        z -= floor(z);
+        u = this.fade(x);
+        v = this.fade(y);
+        w = this.fade(z);
+        p = this.p;
+        A = p[X + 0] + Y;
+        AA = p[A] + Z;
+        AB = p[A + 1] + Z;
+        B = p[X + 1] + Y;
+        BA = p[B] + Z;
+        BB = p[B + 1] + Z;
+        return this.lerp(w, this.lerp(v, this.lerp(u, this.grad(p[AA + 0], x + 0, y + 0, z + 0), this.grad(p[BA + 0], x - 1, y + 0, z + 0)), this.lerp(u, this.grad(p[AB + 0], x + 0, y - 1, z + 0), this.grad(p[BB + 0], x - 1, y - 1, z + 0))), this.lerp(v, this.lerp(u, this.grad(p[AA + 1], x + 0, y + 0, z - 1), this.grad(p[BA + 1], x - 1, y + 0, z - 1)), this.lerp(u, this.grad(p[AB + 1], x + 0, y - 1, z - 1), this.grad(p[BB + 1], x - 1, y - 1, z - 1))));
+    };
+
+    PerlinNoise.prototype.fade = function(t) {
+        return t * t * t * (t * (t * 6 - 15) + 10);
+    };
+
+    PerlinNoise.prototype.lerp = function(t, a, b) {
+        return a + t * (b - a);
+    };
+
+    PerlinNoise.prototype.grad = function(hash, x, y, z) {
+        var h, u, v;
+        h = hash & 15;
+        u = h < 8 ? x : y;
+        v = h < 4 ? y : h === 12 || h === 14 ? x : z;
+        return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
+    };
+
+    PerlinNoise.prototype.octaves = function(octave) {
+        if (octave) {
+            return this.octave = octave;
+        } else {
+            return this.octave;
+        }
+    };
+
+    PerlinNoise.prototype.noise = function() {
+        var args;
+        args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+        switch (args.length) {
+            case 1:
+                return this.octaveNoise1.apply(this, arguments);
+            case 2:
+                return this.octaveNoise2.apply(this, arguments);
+            case 3:
+                return this.octaveNoise3.apply(this, arguments);
+        }
+    };
+
+    PerlinNoise.prototype.octaveNoise1 = function(x) {
+        var amp, i, result, _i, _ref;
+        result = 0.0;
+        amp = 1.0;
+        for (i = _i = 0, _ref = this.octave; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+            result += this._noise(x) * amp;
+            x *= 2.0;
+            amp *= 0.5;
+        }
+        return result;
+    };
+
+    PerlinNoise.prototype.octaveNoise2 = function(x, y) {
+        var amp, i, result, _i, _ref;
+        result = 0.0;
+        amp = 1.0;
+        for (i = _i = 0, _ref = this.octave; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+            result += this._noise(x, y) * amp;
+            x *= 2.0;
+            y *= 2.0;
+            amp *= 0.5;
+        }
+        return result;
+    };
+
+    PerlinNoise.prototype.octaveNoise3 = function(x, y, z) {
+        var amp, i, result, _i, _ref;
+        result = 0.0;
+        amp = 1.0;
+        for (i = _i = 0, _ref = this.octave; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+            result += this._noise(x, y, z) * amp;
+            x *= 2.0;
+            y *= 2.0;
+            z *= 2.0;
+            amp *= 0.5;
+        }
+        return result;
+    };
+
+    /*!--------------------------------------------------
+      EXPORTS
+      ----------------------------------------------------- */
+    exports.PerlinNoise = PerlinNoise;
+    exports.Xorshift = Xorshift;
 
 }(window, document, window));

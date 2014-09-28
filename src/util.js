@@ -414,7 +414,7 @@ function ajax(url, opt) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200 || xhr.status === 201) {
-                def.resolve(JSON.parse(xhr.responseText), xhr);
+                def.resolve(xhr.responseText, xhr);
                 def = null;
             }
             else {
@@ -556,7 +556,7 @@ function when(arr) {
 
     while(i--) {
         (function (index) {
-            arr[i].done(function (res) {
+            arr[index].done(function (res) {
                 _watch(res, index);
             });
         }(i));
