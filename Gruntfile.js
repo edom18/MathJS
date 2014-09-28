@@ -40,6 +40,7 @@ module.exports = function(grunt) {
                     'src/vec2.js',
                     'src/vec3.js',
                     'src/vec4.js',
+                    'src/Plane.js',
                     'src/Sphere.js',
                     'src/Torus.js',
                     'src/PerlinNoise.js'
