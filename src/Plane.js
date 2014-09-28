@@ -11,7 +11,7 @@
         for (var col_i = 0; col_i <= column; col_i++) {
             for (var row_i = 0; row_i <= row; row_i++) {
                 var rowUnit = (row_i / row) * 2 - 1;
-                var colUnit = (col_i / column) * 2 - 1;
+                var colUnit = -((col_i / column) * 2 - 1);
                 var x = width  * rowUnit;
                 var z = height * colUnit;
                 var stx = (1 / row) * row_i;
