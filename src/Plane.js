@@ -12,10 +12,10 @@
             for (var row_i = 0; row_i <= row; row_i++) {
                 var rowUnit = (row_i / row) * 2 - 1;
                 var colUnit = -((col_i / column) * 2 - 1);
-                var x = width  * rowUnit;
-                var z = height * colUnit;
-                var stx = (1 / row) * row_i;
-                var stz = (1 / column) * col_i;
+                var x = width  * colUnit;
+                var z = height * rowUnit;
+                var stx = -((1 / column) * col_i);
+                var stz = (1 / row) * row_i;
 
                 var tc = color ? color : [1, 1, 1, 1];
 
@@ -26,16 +26,17 @@
             }
         }
 
+        // Generate indecies.
         for (col_i = 0; col_i < column; col_i++) {
             for (row_i = 0; row_i < row; row_i++) {
-                var base = (column * row_i)
-                var idx0 = base + col_i;
-                var idx1 = base + col_i + 1;
-                var idx2 = base + col_i + column + 2;
-                var idx3 = base + col_i + column + 1;
+                var base = ((column + 1) * row_i) + col_i;
+                var idx0 = base;
+                var idx1 = base + 1;
+                var idx2 = base + column + 1;
+                var idx3 = base + column + 2;
 
                 index.push(idx0, idx1, idx2);
-                index.push(idx0, idx2, idx3);
+                index.push(idx3, idx2, idx1);
             }
         }
 
