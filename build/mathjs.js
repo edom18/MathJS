@@ -1063,6 +1063,20 @@ ns.util = util;
         return mat;
     };
 
+    Object.defineProperty(mat4, 'projectiveTexture', {
+        set: function (m) {},
+        get: function () {
+            return mat4(
+                0.5,  0.0, 0.0, 0.0,
+                0.0, -0.5, 0.0, 0.0,
+                0.0,  0.0, 1.0, 0.0,
+                0.5,  0.5, 0.0, 1.0
+            );
+        }
+    });
+
+    /////////////////////////////////////////////////////////////////////////////
+
     /**
      * Check equal matrix
      * @param {Float32Array} mat1
