@@ -1310,6 +1310,26 @@ ns.util = util;
     };
 
     /**
+     * Multiply by scalar
+     *
+     * @param {mat4} mat
+     * @param {number} scalar
+     * @param {mat4?} dest
+     *
+     * @return {mat4}
+     */
+    mat4.multiplyScalar = function (mat, scalar, dest) {
+        dest || (dest = mat4());
+
+        dest[0] = mat[0] * scalar; dest[4] = mat[4] * scalar; dest[ 8] = mat[ 8] * scalar; dest[12] = mat[12] * scalar;
+        dest[1] = mat[1] * scalar; dest[5] = mat[5] * scalar; dest[ 9] = mat[ 9] * scalar; dest[13] = mat[13] * scalar;
+        dest[2] = mat[2] * scalar; dest[6] = mat[6] * scalar; dest[10] = mat[10] * scalar; dest[14] = mat[14] * scalar;
+        dest[3] = mat[3] * scalar; dest[7] = mat[7] * scalar; dest[11] = mat[11] * scalar; dest[15] = mat[15] * scalar;
+
+        return dest;
+    };
+
+    /**
      * @param {Float32Array} mat
      * @param {Float32Array} v
      * @param {Float32Array} dest
