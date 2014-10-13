@@ -31,6 +31,13 @@
         else if (Array.isArray(elements)) {
             return mat4.create(elements);
         }
+        else if (Float32Array.prototype.isPrototypeOf(elements) ||
+                 Float64Array.prototype.isPrototypeOf(elements)) {
+            for (var i = 0; i < 16; i++) {
+                ele.push(arguments[0][i] || 0);
+            }
+            return mat4.create(ele);
+        }
         else {
             for (var i = 0; i < 16; i++) {
                 ele.push(arguments[i] || 0);
