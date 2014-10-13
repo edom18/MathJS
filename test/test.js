@@ -142,6 +142,33 @@
             assert.equal((3 * 70  + 6 * 80  + 9  * 90), mt3[8]);
         });
 
+        it('multiplyScalarで行列をスカラー倍できる', function () {
+            var m1 = mat4([
+                    1, 2, 3, 4,
+                    5, 6, 7, 8,
+                    9, 10, 11, 12,
+                    13, 14, 15, 16
+                ]);
+            var m2 = mat4.multiplyScalar(m1, 10);
+
+            assert.equal(10,  m2[ 0]);
+            assert.equal(20,  m2[ 1]);
+            assert.equal(30,  m2[ 2]);
+            assert.equal(40,  m2[ 3]);
+            assert.equal(50,  m2[ 4]);
+            assert.equal(60,  m2[ 5]);
+            assert.equal(70,  m2[ 6]);
+            assert.equal(80,  m2[ 7]);
+            assert.equal(90,  m2[ 8]);
+            assert.equal(100, m2[ 9]);
+            assert.equal(110, m2[10]);
+            assert.equal(120, m2[11]);
+            assert.equal(130, m2[12]);
+            assert.equal(140, m2[13]);
+            assert.equal(150, m2[14]);
+            assert.equal(160, m2[15]);
+        });
+
         it('mat3.transpose(mat)で行列を転置行列に変換できる', function () {
             var mat = mat3([
                 1, 2, 3,
