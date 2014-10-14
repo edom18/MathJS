@@ -1042,6 +1042,13 @@ ns.util = util;
         else if (Array.isArray(elements)) {
             return mat4.create(elements);
         }
+        else if (Float32Array.prototype.isPrototypeOf(elements) ||
+                 Float64Array.prototype.isPrototypeOf(elements)) {
+            for (var i = 0; i < 16; i++) {
+                ele.push(arguments[0][i] || 0);
+            }
+            return mat4.create(ele);
+        }
         else {
             for (var i = 0; i < 16; i++) {
                 ele.push(arguments[i] || 0);
@@ -1073,6 +1080,11 @@ ns.util = util;
                 0.5,  0.5, 0.0, 1.0
             );
         }
+    });
+
+    Object.defineProperty(mat4, 'zero', {
+        set: function (m) {},
+        get: function () { return mat4(0.0); }
     });
 
     /////////////////////////////////////////////////////////////////////////////
@@ -1260,6 +1272,29 @@ ns.util = util;
         xmax = ymax * aspect;
 
         return mat4.makeFrustum(xmin, xmax, ymin, ymax, near, far, dest);
+    };
+
+    mat4.add = function (A, B, dest) {
+        dest || (dest = mat4());
+
+        dest[ 0] = A[ 0] + B[ 0];
+        dest[ 1] = A[ 1] + B[ 1];
+        dest[ 2] = A[ 2] + B[ 2];
+        dest[ 3] = A[ 3] + B[ 3];
+        dest[ 4] = A[ 4] + B[ 4];
+        dest[ 5] = A[ 5] + B[ 5];
+        dest[ 6] = A[ 6] + B[ 6];
+        dest[ 7] = A[ 7] + B[ 7];
+        dest[ 8] = A[ 8] + B[ 8];
+        dest[ 9] = A[ 9] + B[ 9];
+        dest[10] = A[10] + B[10];
+        dest[11] = A[11] + B[11];
+        dest[12] = A[12] + B[12];
+        dest[13] = A[13] + B[13];
+        dest[14] = A[14] + B[14];
+        dest[15] = A[15] + B[15];
+
+        return dest;
     };
 
     /**
