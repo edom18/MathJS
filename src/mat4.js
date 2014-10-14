@@ -71,6 +71,11 @@
         }
     });
 
+    Object.defineProperty(mat4, 'zero', {
+        set: function (m) {},
+        get: function () { return mat4(0.0); }
+    });
+
     /////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -256,6 +261,29 @@
         xmax = ymax * aspect;
 
         return mat4.makeFrustum(xmin, xmax, ymin, ymax, near, far, dest);
+    };
+
+    mat4.add = function (A, B, dest) {
+        dest || (dest = mat4());
+
+        dest[ 0] = A[ 0] + B[ 0];
+        dest[ 1] = A[ 1] + B[ 1];
+        dest[ 2] = A[ 2] + B[ 2];
+        dest[ 3] = A[ 3] + B[ 3];
+        dest[ 4] = A[ 4] + B[ 4];
+        dest[ 5] = A[ 5] + B[ 5];
+        dest[ 6] = A[ 6] + B[ 6];
+        dest[ 7] = A[ 7] + B[ 7];
+        dest[ 8] = A[ 8] + B[ 8];
+        dest[ 9] = A[ 9] + B[ 9];
+        dest[10] = A[10] + B[10];
+        dest[11] = A[11] + B[11];
+        dest[12] = A[12] + B[12];
+        dest[13] = A[13] + B[13];
+        dest[14] = A[14] + B[14];
+        dest[15] = A[15] + B[15];
+
+        return dest;
     };
 
     /**
