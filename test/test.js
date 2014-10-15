@@ -776,7 +776,7 @@
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        it('vec3.applymatrix3(v, mat, dest)で、3x3行列とベクトルとの積を求められる', function () {
+        it('vec3.applymatrix3(v, mat, dest)で、3x3行列とベクトルとの積を求められる。計算はmatrix x vector', function () {
             var v = vec3(3, 5, 7);
             var m = mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
             var res = vec3.applyMatrix3(v, m);
@@ -786,7 +786,19 @@
             assert.equal(3 * 3 + 6 * 5 + 9 * 7, res[2]);
         });
 
-        it('vec3.applymatrix4(v, mat, dest)で、4x4行列とベクトルとの積を求められる（ただし、ベクトルの第4成分は1と見なす）', function () {
+        it('vec3.applymatrix3FromRight(v, mat, dest)で、3x3行列とベクトルとの積を求められる。計算はvector x matrix。', function () {
+            var v = vec3(3, 5, 7);
+            var m = mat3(1, 2, 3,
+                         4, 5, 6,
+                         7, 8, 9);
+            var res = vec3.applyMatrix3FromRight(v, m);
+
+            assert.equal(3 * 1 + 5 * 2 + 7 * 3, res[0]);
+            assert.equal(3 * 4 + 5 * 5 + 7 * 6, res[1]);
+            assert.equal(3 * 7 + 5 * 8 + 7 * 9, res[2]);
+        });
+
+        it('vec3.applymatrix4(v, mat, dest)で、4x4行列とベクトルとの積を求められる。計算はmatrix x vector（ただし、ベクトルの第4成分は1と見なす）', function () {
             var v = vec3(3, 5, 7);
             var m = mat4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
             var res = vec3.applyMatrix4(v, m);
@@ -794,7 +806,19 @@
             assert.equal(1 * 3 + 5 * 5 +  9 * 7 + 13, res[0]);
             assert.equal(2 * 3 + 6 * 5 + 10 * 7 + 14, res[1]);
             assert.equal(3 * 3 + 7 * 5 + 11 * 7 + 15, res[2]);
-            //assert.equal(4 * 3 + 8 * 5 + 12 * 7 + 16, res[3]);
+        });
+
+        it('vec3.applymatrix4(v, mat, dest)で、4x4行列とベクトルとの積を求められる。計算はvector x matrix（ただし、ベクトルの第4成分は1と見なす）', function () {
+            var v = vec3(3, 5, 7);
+            var m = mat4(1, 2, 3, 4,
+                         5, 6, 7, 8,
+                         9, 10, 11, 12,
+                         13, 14, 15, 16);
+            var res = vec3.applyMatrix4FromRight(v, m);
+
+            assert.equal(3 * 1 + 5 *  2 + 7 *  3 + 4,  res[0]);
+            assert.equal(3 * 5 + 5 *  6 + 7 *  7 + 8,  res[1]);
+            assert.equal(3 * 9 + 5 * 10 + 7 * 11 + 12, res[2]);
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
