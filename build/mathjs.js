@@ -2600,6 +2600,27 @@ ns.util = util;
     };
 
     /**
+     * Applay matrix for the vector from right.
+     * @param {Float32Array} v
+     * @param {Float32Array} mat
+     * @param {Float32Array} dest
+     */
+    vec3.applyMatrix3FromRight = function(v, mat, dest) {
+
+        dest || (dest = vec3());
+
+        var x = v[0],
+            y = v[1],
+            z = v[2];
+
+        dest[0] = x * mat[0] + y * mat[1] + z * mat[2];
+        dest[1] = x * mat[3] + y * mat[4] + z * mat[5];
+        dest[2] = x * mat[6] + y * mat[7] + z * mat[8];
+
+        return dest;
+    };
+
+    /**
      * Applay matrix for the vector.
      * @param {Float32Array} v
      * @param {Float32Array} mat
@@ -2616,6 +2637,27 @@ ns.util = util;
         dest[0] = mat[0] * x + mat[4] * y + mat[8]  * z + mat[12];
         dest[1] = mat[1] * x + mat[5] * y + mat[9]  * z + mat[13];
         dest[2] = mat[2] * x + mat[6] * y + mat[10] * z + mat[14];
+
+        return dest;
+    };
+
+    /**
+     * Applay matrix for the vector from right.
+     * @param {Float32Array} v
+     * @param {Float32Array} mat
+     * @param {Float32Array} dest
+     */
+    vec3.applyMatrix4FromRight = function(v, mat, dest) {
+
+        dest || (dest = vec3());
+
+        var x = v[0],
+            y = v[1],
+            z = v[2];
+
+        dest[0] = x * mat[0] + y * mat[1] + z * mat[2]  + mat[3];
+        dest[1] = x * mat[4] + y * mat[5] + z * mat[6]  + mat[7];
+        dest[2] = x * mat[8] + y * mat[9] + z * mat[10] + mat[11];
 
         return dest;
     };
