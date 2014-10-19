@@ -3095,7 +3095,7 @@ ns.util = util;
 
             v2x = v2[0],
             v2y = v2[1],
-            v2z = v2[2];
+            v2z = v2[2],
             v2w = v2[3];
 
         return v1x * v2x + v1y * v2y + v1z * v2z + v1w * v2w;
