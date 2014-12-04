@@ -43,7 +43,8 @@ module.exports = function(grunt) {
                     'src/Plane.js',
                     'src/Sphere.js',
                     'src/Torus.js',
-                    'src/PerlinNoise.js'
+                    'src/PerlinNoise.js',
+                    'src/color.js'
                 ],
                 dest: OUTPUT_JS
             }
