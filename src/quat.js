@@ -216,6 +216,24 @@
         return dest;
     };
 
+
+    /**
+     * Multiply scalar to a quaternion
+     *
+     * @param {Float32array} q Quaternion
+     * @param {number} s Scalar
+     * @return {Float32array} multiplied quaternion
+     */
+    quat.multiplyScalar = function (q, s) {
+        q[0] *= s;
+        q[1] *= s;
+        q[2] *= s;
+        q[3] *= s;
+
+        return q;
+    };
+
+
     /**
      * Make a rotation quaternion.
      * @param {number} radian
@@ -281,6 +299,52 @@
         dest[3] = -qt[3];
 
         return dest;
+    };
+
+
+    /**
+     * @param {Float32Array} q1
+     * @param {Float32Array} q2
+     * @param {number} t
+     * @param {Float32Array} dest
+     */
+    quat.leap = function (q1, q2, t, dest) {
+
+        dest || (dest = quat());
+
+        var l = 1.0 - t;
+        var tmp = q1 * l + q2 * t;
+        tmp.normalize();
+
+        return tmp;
+    };
+
+
+    /**
+     * Quaternion's length
+     *
+     * @param {Float32array} q Quaternion
+     */
+    quat.norm = function (q) {
+        var w2 = q[0] * q[0];
+        var x2 = q[1] * q[1];
+        var y2 = q[2] * q[2];
+        var z2 = q[3] * q[3];
+        return sqrt(w2 + x2 + y2 + z2);
+    };
+
+
+    /**
+     * @param {Float32array} q Quaternion
+     * @retrun {Float32array} Normlized quaternion
+     */
+    quat.normalize = function (q) {
+        var norm = quat.norm(q);
+        q[0] /= norm;
+        q[1] /= norm;
+        q[2] /= norm;
+        q[3] /= norm;
+        return q;
     };
 
     /**
