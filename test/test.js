@@ -72,6 +72,41 @@
             assert.equal(true, q1 !== q2);
             assert.equal(true, quat.equal(q1, q2));
         });
+
+        it('quat.multiplyScalar(q, s)はクォータニオンをスカラー倍した結果を返す。破壊的メソッド', function () {
+            var q = quat([1, 2, 3, 4]);
+            var scalar = 5;
+            quat.multiplyScalar(q, scalar);
+            assert.equal(true, q[0] === 1 * scalar);
+            assert.equal(true, q[1] === 2 * scalar);
+            assert.equal(true, q[2] === 3 * scalar);
+            assert.equal(true, q[3] === 4 * scalar);
+        });
+
+        it('quat.norm(q)はクォータニオンの長さを返す。', function () {
+            var q = quat([1, 2, 3, 4]);
+            var len1 = Math.sqrt((1 * 1) + (2 * 2) + (3 * 3) + (4 * 4));
+            var len2 = quat.norm(q);
+            assert.deepEqual(len1, len2);
+        });
+
+        it('quat.normalize(q)はクォータニオンを正規化する。破壊的メソッド', function () {
+            var a = new Float32Array([1, 2, 3, 4]);
+
+            var q = quat([a[0], a[1], a[2], a[3]]);
+            var len = Math.sqrt((a[0] * a[0]) + (a[1] * a[1]) + (a[2] * a[2]) + (a[3] * a[3]));
+            a[0] /= len;
+            a[1] /= len;
+            a[2] /= len;
+            a[3] /= len;
+
+            var result = quat.normalize(q);
+            assert.equal(a[0], q[0]);
+            assert.equal(a[1], q[1]);
+            assert.equal(a[2], q[2]);
+            assert.equal(a[3], q[3]);
+            assert.deepEqual(q, result);
+        });
     });
 
     //mat3テスト
