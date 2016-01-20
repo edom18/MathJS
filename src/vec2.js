@@ -379,7 +379,7 @@
      * @param {vec2} p  判別したい点
      * @return {vec2} 検出した最短点の位置
      */
-    vec2.detectPointOnLine function (e0, e1, p) {
+    vec2.detectPointOnLine = function (e0, e1, p) {
 
         //端点0〜1のベクトル
         var vec = vec2.sub(e1, e0);
