@@ -515,6 +515,22 @@
     };
 
     /**
+     * Calculate the reflection direction for an incident vecotr.
+     * 
+     * R = F + 2(-F・N)N
+     *
+     * @param {Float32Array} v
+     * @param {Float32Array} normal
+     * @return {Float32Array} reflect vector
+     */
+    vec3.reflect = function (v, normal) {
+        var iv = vec3.minus(v);
+        var a = vec3.dot(iv, normal);
+        var n = vec3.multiplyScalar(normal, (2 * a));
+        return vec3.add(v, n);
+    };
+
+    /**
      * To string vector.
      * @param {Float32Array} v
      * @return {string}
