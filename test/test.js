@@ -555,6 +555,14 @@
             assert.equal(2 * 5 + 5 * 12 + 8, result[1]);
         });
 
+        it('vec2.reflect(vector, normal)で反射ベクトルを得ることができる', function () {
+            var v = vec2(1, 1);
+            var normal = vec2.normalize(vec2(-1, 0));
+            var refVec = vec2.reflect(v, normal);
+
+            assert.equal(-1, refVec.x);
+            assert.equal(1, refVec.y);
+        });
 
         it('vec2.toString(v)でカンマ区切りの文字列に変換できる', function () {
             var v = vec2(2, 3);
@@ -854,6 +862,16 @@
             assert.equal(3 * 1 + 5 *  2 + 7 *  3 + 4,  res[0]);
             assert.equal(3 * 5 + 5 *  6 + 7 *  7 + 8,  res[1]);
             assert.equal(3 * 9 + 5 * 10 + 7 * 11 + 12, res[2]);
+        });
+
+        it('vec3.reflect(vector, normal)で反射ベクトルを得ることができる', function () {
+            var v = vec3(1, 1, 1);
+            var normal = vec3.normalize(vec3(-1, 0, 0));
+            var refVec = vec3.reflect(v, normal);
+
+            assert.equal(-1, refVec.x);
+            assert.equal(1, refVec.y);
+            assert.equal(1, refVec.z);
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
